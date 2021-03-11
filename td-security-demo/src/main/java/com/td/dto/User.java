@@ -2,6 +2,9 @@ package com.td.dto;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
+import javax.validation.constraints.NotNull;
+import java.util.Date;
+
 /**
  * @className: User
  * @description:
@@ -13,10 +16,26 @@ public class User {
     public interface UserSimpleView{}
     public interface UserDetailView extends UserSimpleView {};
     /**  */
+    private String id;
+
+    /**  */
     private String userName;
 
     /**  */
+    @NotNull(message = "密码不能为空")
     private String password;
+
+    /**  */
+    private Date birthday;
+
+    @JsonView(UserSimpleView.class)
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     @JsonView(UserSimpleView.class)
     public String getUserName() {
@@ -34,5 +53,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @JsonView(UserSimpleView.class)
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
     }
 }

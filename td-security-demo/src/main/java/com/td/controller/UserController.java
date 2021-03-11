@@ -6,12 +6,12 @@ import com.td.dto.UserQueryCondition;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,6 +23,21 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+
+    @PostMapping
+    public User create(@Valid @RequestBody User user, BindingResult errors){
+        if(errors.hasErrors()){
+            errors.getAllErrors().stream().forEach(error -> System.out.println(error.getDefaultMessage()));
+        }
+
+        System.out.println(user.getId());
+        System.out.println(user.getUserName());
+        System.out.println(user.getPassword());
+        System.out.println(user.getBirthday());
+
+        user.setId("1");
+        return user;
+    }
 
     /**
      *
@@ -52,6 +67,7 @@ public class UserController {
     public User getInfo(@PathVariable String id){
         User user = new User();
         user.setUserName("tom");
+        user.setBirthday(new Date());
         return user;
     }
 }
