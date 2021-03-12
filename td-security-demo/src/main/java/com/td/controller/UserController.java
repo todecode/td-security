@@ -70,4 +70,28 @@ public class UserController {
         user.setBirthday(new Date());
         return user;
     }
+
+    @PutMapping(value = "/{id:\\d+}")
+    public User update(@Valid @RequestBody User user, BindingResult errors){
+        if(errors.hasErrors()){
+            errors.getAllErrors().stream().forEach(error -> {
+//                FieldError fieldError = (FieldError) error;
+//                String message = fieldError.getField() +" " + error.getDefaultMessage();
+                System.out.println(error.getDefaultMessage());
+            });
+        }
+
+        System.out.println(user.getId());
+        System.out.println(user.getUserName());
+        System.out.println(user.getPassword());
+        System.out.println(user.getBirthday());
+
+        user.setId("1");
+        return user;
+    }
+
+    @DeleteMapping(value = "/{id:\\d+}")
+    public void delete(@PathVariable String id){
+        System.out.println(id);
+    }
 }
