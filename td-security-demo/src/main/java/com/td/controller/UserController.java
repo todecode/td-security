@@ -65,6 +65,12 @@ public class UserController {
     @GetMapping(value = "/{id:\\d+}")
     @JsonView(User.UserDetailView.class)
     public User getInfo(@PathVariable String id){
+
+        // spring boot默认异常处理
+//        throw new RuntimeException("user not Exist");
+
+        // 自定义异常处理
+//        throw new UserNotExistException(id);
         User user = new User();
         user.setUserName("tom");
         user.setBirthday(new Date());
