@@ -1,4 +1,4 @@
-package com.td.controller;
+package com.td.web.controller;
 
 import org.junit.Before;
 import org.junit.Test;

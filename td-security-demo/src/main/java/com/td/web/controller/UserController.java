@@ -1,4 +1,4 @@
-package com.td.controller;
+package com.td.web.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.td.dto.User;
@@ -71,6 +71,7 @@ public class UserController {
 
         // 自定义异常处理
 //        throw new UserNotExistException(id);
+        System.out.println("进入getInfo方法。。。。");
         User user = new User();
         user.setUserName("tom");
         user.setBirthday(new Date());
