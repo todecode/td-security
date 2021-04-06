@@ -1,5 +1,6 @@
 package com.td.dto;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -11,8 +12,10 @@ import lombok.Data;
 @Data
 public class UserQueryCondition {
     /**  */
+    @ApiModelProperty("用户名")
     private String userName;
     /**  */
+    @ApiModelProperty("年龄")
     private String age;
     /**  */
     private String ageTo;

@@ -3,6 +3,8 @@ package com.td.web.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.td.dto.User;
 import com.td.dto.UserQueryCondition;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.springframework.data.domain.Pageable;
@@ -47,6 +49,7 @@ public class UserController {
      */
     @GetMapping()
     @JsonView(User.UserSimpleView.class)
+    @ApiOperation(value = "查询用户列表")
     public List<User> query(UserQueryCondition condition, Pageable pageable){
         // 将输入的指打印出来
         System.out.println(ReflectionToStringBuilder.toString(condition, ToStringStyle.MULTI_LINE_STYLE));
@@ -64,7 +67,7 @@ public class UserController {
 
     @GetMapping(value = "/{id:\\d+}")
     @JsonView(User.UserDetailView.class)
-    public User getInfo(@PathVariable String id){
+    public User getInfo(@ApiParam(value = "用户id") @PathVariable String id){
 
         // spring boot默认异常处理
 //        throw new RuntimeException("user not Exist");
