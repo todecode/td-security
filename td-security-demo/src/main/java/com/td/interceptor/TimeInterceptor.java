@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @className: TimeInterceptor
- * @description:
+ * @description: 拦截器，
  * @author: cyd
  * @date: 2021/3/13 上午11:57
  **/
@@ -28,8 +28,8 @@ public class TimeInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
         System.out.println("preHandle");
-        System.out.println(((HandlerMethod)o).getBean().getClass().getName());
-        System.out.println(((HandlerMethod)o).getMethod().getName() );
+        System.out.println("preHandle className:"+((HandlerMethod)o).getBean().getClass().getName());
+        System.out.println("preHandle MethodName:"+((HandlerMethod)o).getMethod().getName() );
         request.setAttribute("startTime",System.currentTimeMillis());
         return true;
     }
