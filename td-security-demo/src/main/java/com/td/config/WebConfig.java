@@ -19,12 +19,27 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     TimeInterceptor timeInterceptor;
 
     /**
+     * 用作与异步线程拦截
+     * 主要关注：
+     * registerCallableInterceptors 注册异步线程
+     * registerDeferredResultInterceptors
+     * setDefaultTimeout 超时时间处理
+     * setTaskExecutor 可以自定义线程池
+     * @param configurer
+     */
+//    @Override
+//    public void configureAsyncSupport(AsyncSupportConfigurer configurer) {
+//        configurer.setTaskExecutor()
+//
+//    }
+
+    /**
      * 拦截器注册器，
      * @param registry
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(timeInterceptor);
+//        registry.addInterceptor(timeInterceptor);
     }
 
     /**
