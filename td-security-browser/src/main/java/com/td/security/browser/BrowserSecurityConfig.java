@@ -1,8 +1,13 @@
 package com.td.security.browser;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 
 /**
  * @className: BrowserSecurityConfig
@@ -10,8 +15,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  * @author: cyd
  * @date: 2019/12/7 下午4:42
  **/
+@Slf4j
 @Configuration
 public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter  {
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
 
     /**
      * formLogin() --> 表单登陆
@@ -26,6 +37,7 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter  {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // security默认配置的代码
+
         http.formLogin()
                 .and()
                 .authorizeRequests()
