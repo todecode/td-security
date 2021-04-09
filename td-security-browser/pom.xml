@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.td.security</groupId>
     <artifactId>td-security-browser</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
     <name>td-security-borowser</name>
     <parent>
         <artifactId>td-security</artifactId>
@@ -13,8 +13,8 @@
     </parent>
     <dependencies>
         <dependency>
-            <groupId>com.imooc.security</groupId>
-            <artifactId>imooc-security-core</artifactId>
+            <groupId>com.td.security</groupId>
+            <artifactId>td-security-core</artifactId>
             <version>${td.security.version}</version>
         </dependency>
 

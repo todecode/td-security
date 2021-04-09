@@ -14,8 +14,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.imooc.security</groupId>
-            <artifactId>imooc-security-browser</artifactId>
+            <groupId>com.td.security</groupId>
+            <artifactId>td-security-browser</artifactId>
             <version>${td.security.version}</version>
         </dependency>
         <dependency>
