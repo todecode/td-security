@@ -1,6 +1,8 @@
 package com.td.security.browser;
 
+import com.td.security.core.properties.SecurityProperties;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,6 +21,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter  {
 
+    @Autowired
+    private SecurityProperties securityProperties;
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -39,10 +43,16 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter  {
         // security默认配置的代码
 
         http.formLogin()
+                .loginPage("/authentication/require")
+                .loginProcessingUrl("/authentication/form")
                 .and()
                 .authorizeRequests()
+                // 排除该页面不做授权
+                .antMatchers("/authentication/require",securityProperties.getBrowser().getLoginPage()).permitAll()
                 .anyRequest()
-                .authenticated();
+                .authenticated()
+                .and()
+                .csrf().disable();
 
     }
 }
