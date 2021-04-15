@@ -54,7 +54,8 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter  {
         // security默认配置的代码
         ValidateCodeFilter validateCodeFilter = new ValidateCodeFilter();
         validateCodeFilter.setAuthenticationFailureHandler(tdAuthenticationFailureHandler);
-
+        validateCodeFilter.setSecurityProperties(securityProperties);
+        validateCodeFilter.afterPropertiesSet();
 
         http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin()

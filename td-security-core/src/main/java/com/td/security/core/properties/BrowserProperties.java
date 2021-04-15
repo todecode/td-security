@@ -7,4 +7,5 @@ public class BrowserProperties {
     private String loginPage = "/td-signIn.html";
 
     private LoginType loginType = LoginType.JSON;
+
 }
