@@ -1,6 +1,9 @@
 package com.td.security.browser;
 
+import com.td.security.browser.authentication.TdAuthenticationFailureHandler;
+import com.td.security.browser.authentication.TdAuthenticationSuccessHandler;
 import com.td.security.core.properties.SecurityProperties;
+import com.td.security.core.validate.code.ValidateCodeFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -9,6 +12,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
 /**
@@ -23,6 +27,13 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter  {
 
     @Autowired
     private SecurityProperties securityProperties;
+
+    @Autowired
+    private TdAuthenticationSuccessHandler tdAuthenticationSuccessHandler;
+
+    @Autowired
+    private TdAuthenticationFailureHandler tdAuthenticationFailureHandler;
+
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -45,8 +56,8 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter  {
         http.formLogin()
                 .loginPage("/authentication/require")
                 .loginProcessingUrl("/authentication/form")
-//                .successForwardUrl("")
-//                .failureForwardUrl("")
+                .successHandler(tdAuthenticationSuccessHandler)
+                .failureHandler(tdAuthenticationFailureHandler)
                 .and()
                 .authorizeRequests()
                 // 排除该页面不做授权
