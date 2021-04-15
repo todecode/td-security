@@ -35,6 +35,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
             }catch (ValidateCodeException e){
                 // 把错误信息给返回回去
                 authenticationFailureHandler.onAuthenticationFailure(request,response,e);
+                return;
             }
         }
         filterChain.doFilter(request,response);

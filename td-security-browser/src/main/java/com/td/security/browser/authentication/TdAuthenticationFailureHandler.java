@@ -1,6 +1,7 @@
 package com.td.security.browser.authentication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.td.security.browser.support.SimpleResponse;
 import com.td.security.core.properties.LoginType;
 import com.td.security.core.properties.SecurityProperties;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +38,7 @@ public class TdAuthenticationFailureHandler extends SimpleUrlAuthenticationFailu
         if(LoginType.JSON.equals(securityProperties.getBrowser().getLoginType())){
             response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             response.setContentType("application/json;charset=UTF-8");
-            response.getWriter().write(objectMapper.writeValueAsString(exception));
+            response.getWriter().write(objectMapper.writeValueAsString(new SimpleResponse(exception.getMessage())));
         }else{
             super.onAuthenticationFailure(request,response,exception);
         }
