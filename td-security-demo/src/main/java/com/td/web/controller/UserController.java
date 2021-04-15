@@ -8,6 +8,8 @@ import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +27,20 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+
+    /**
+     * 有2种方式获取登陆用户信息
+     * 1、请求直接设置参数Authentication，springMVC自动注入
+     * 2、return时候，使用SecurityContextHolder.getContext().getAuthentication()获取
+     * 3、可以通过@AuthenticationPrincipal获取最终登陆的对象
+     * @param userDetails
+     * @return
+     */
+    @GetMapping("/me")
+    public Object getCureentUser(@AuthenticationPrincipal UserDetails userDetails){
+//        return SecurityContextHolder.getContext().getAuthentication();
+        return userDetails;
+    }
 
     @PostMapping
     public User create(@Valid @RequestBody User user, BindingResult errors){

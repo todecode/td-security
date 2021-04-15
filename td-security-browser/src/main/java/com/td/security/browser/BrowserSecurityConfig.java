@@ -45,6 +45,8 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter  {
         http.formLogin()
                 .loginPage("/authentication/require")
                 .loginProcessingUrl("/authentication/form")
+//                .successForwardUrl("")
+//                .failureForwardUrl("")
                 .and()
                 .authorizeRequests()
                 // 排除该页面不做授权
