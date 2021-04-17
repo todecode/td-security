@@ -1,11 +1,11 @@
-package com.td.security.core.validate.code;
+package com.td.security.core.validate.code.ImageIO;
 
+import com.td.security.core.validate.code.ValidateCode;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.awt.image.BufferedImage;
-import java.time.LocalDateTime;
 
 /**
  * @className: ImageCode
@@ -16,21 +16,13 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ImageCode {
+public class ImageCode extends ValidateCode {
 
     private BufferedImage image;
 
-    private String code;
-
-    private LocalDateTime expreTime;
 
     public ImageCode(BufferedImage image, String code, int expireIn) {
+        super(code,expireIn);
         this.image = image;
-        this.code = code;
-        this.expreTime = LocalDateTime.now().plusSeconds(expireIn);
-    }
-
-    public boolean isExpried() {
-        return LocalDateTime.now().isAfter(expreTime);
     }
 }

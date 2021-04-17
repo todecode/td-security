@@ -1,6 +1,9 @@
 package com.td.security.core.validate.code;
 
 import com.td.security.core.properties.SecurityProperties;
+import com.td.security.core.validate.code.ImageIO.ImageCodeGenerator;
+import com.td.security.core.validate.code.sms.DefaultSmsCodeSender;
+import com.td.security.core.validate.code.sms.SmsCodeSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -30,4 +33,14 @@ public class ValidateCodeBeanConfig {
         return codeGenerator;
     }
 
+    /**
+     * 可通过设置name属性来覆盖，ConditionalOnMissingBean(name="smsCodeGenerator")
+     * 也可以设置class的累实现做覆盖，ConditionalOnMissingBean(SmsCodeSender.class)
+     * @return
+     */
+    @Bean
+    @ConditionalOnMissingBean(SmsCodeSender.class)
+    public SmsCodeSender smsCodeSender(){
+        return new DefaultSmsCodeSender();
+    }
 }

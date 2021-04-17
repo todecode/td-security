@@ -1,6 +1,7 @@
 package com.td.security.core.validate.code;
 
 import com.td.security.core.properties.SecurityProperties;
+import com.td.security.core.validate.code.ImageIO.ImageCode;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;

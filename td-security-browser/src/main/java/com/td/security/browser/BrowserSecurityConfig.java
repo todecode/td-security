@@ -90,8 +90,7 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter  {
                 // 排除该页面不做授权
                 .antMatchers("/authentication/require",
                         securityProperties.getBrowser().getLoginPage(),
-                        "/code/image"
-                    ).permitAll()
+                        "/code/*").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

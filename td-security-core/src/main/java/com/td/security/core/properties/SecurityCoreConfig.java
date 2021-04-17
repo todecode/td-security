@@ -1,6 +1,5 @@
-package com.td.security.core;
+package com.td.security.core.properties;
 
-import com.td.security.core.properties.SecurityProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 

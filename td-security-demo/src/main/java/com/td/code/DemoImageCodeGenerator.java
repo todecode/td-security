@@ -1,6 +1,6 @@
 package com.td.code;
 
-import com.td.security.core.validate.code.ImageCode;
+import com.td.security.core.validate.code.ImageIO.ImageCode;
 import com.td.security.core.validate.code.ValidateCodeGenerator;
 import org.springframework.web.context.request.ServletWebRequest;
 
