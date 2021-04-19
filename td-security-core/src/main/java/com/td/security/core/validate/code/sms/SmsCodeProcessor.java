@@ -3,6 +3,8 @@ package com.td.security.core.validate.code.sms;
 import com.td.security.core.validate.code.ValidateCode;
 import com.td.security.core.validate.code.impl.AbstractValidateCodeProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.social.connect.web.HttpSessionSessionStrategy;
+import org.springframework.social.connect.web.SessionStrategy;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.context.request.ServletWebRequest;
@@ -15,6 +17,8 @@ import org.springframework.web.context.request.ServletWebRequest;
  **/
 @Component("smsCodeProcessor")
 public class SmsCodeProcessor  extends AbstractValidateCodeProcessor<ValidateCode> {
+
+    private SessionStrategy sessionStrategy = new HttpSessionSessionStrategy();
 
     /**
      * 短信验证码发送器

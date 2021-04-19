@@ -35,7 +35,7 @@ public class SmsCodeAuthenticationToken extends AbstractAuthenticationToken {
 
     @Override
     public Object getPrincipal() {
-        return null;
+        return principal;
     }
 
     @Override

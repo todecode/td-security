@@ -19,8 +19,6 @@ import java.util.Map;
  **/
 public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> implements ValidateCodeProcessor {
 
-    String SESSION_KEY_PREFIX  = "12";
-
     /**
      * 操作session的工具类
      */
@@ -47,7 +45,7 @@ public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> impl
     }
 
     private void save(ServletWebRequest request,C validateCode){
-        sessionStrategy.setAttribute(request,SESSION_KEY_PREFIX + getProcessorType(request),validateCode);
+        sessionStrategy.setAttribute(request,ValidateCodeProcessor.SESSION_KEY_PREFIX + getProcessorType(request).toUpperCase(),validateCode);
     }
 
     /**

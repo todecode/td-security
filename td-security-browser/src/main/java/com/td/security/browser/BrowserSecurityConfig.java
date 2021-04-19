@@ -2,7 +2,9 @@ package com.td.security.browser;
 
 import com.td.security.browser.authentication.TdAuthenticationFailureHandler;
 import com.td.security.browser.authentication.TdAuthenticationSuccessHandler;
+import com.td.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
 import com.td.security.core.properties.SecurityProperties;
+import com.td.security.core.validate.code.SmsCodeFilter;
 import com.td.security.core.validate.code.ValidateCodeFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +47,9 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter  {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
+
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -70,23 +75,32 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter  {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // security默认配置的代码
+
         ValidateCodeFilter validateCodeFilter = new ValidateCodeFilter();
         validateCodeFilter.setAuthenticationFailureHandler(tdAuthenticationFailureHandler);
         validateCodeFilter.setSecurityProperties(securityProperties);
         validateCodeFilter.afterPropertiesSet();
 
-        http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
-                .formLogin()
+
+        SmsCodeFilter smsCodeFilter = new SmsCodeFilter();
+        smsCodeFilter.setAuthenticationFailureHandler(tdAuthenticationFailureHandler);
+        smsCodeFilter.setSecurityProperties(securityProperties);
+        smsCodeFilter.afterPropertiesSet();
+
+        http .addFilterBefore(smsCodeFilter, UsernamePasswordAuthenticationFilter.class)
+             .addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
+            .formLogin()
                 .loginPage("/authentication/require")
                 .loginProcessingUrl("/authentication/form")
                 .successHandler(tdAuthenticationSuccessHandler)
                 .failureHandler(tdAuthenticationFailureHandler)
-            .and().rememberMe()
+                .and()
+           .rememberMe()
                 .tokenRepository(persistentTokenRepository())
                 .tokenValiditySeconds(securityProperties.getBrowser().getRememberMeSeconds())
                 .userDetailsService(userDetailsService)
-            .and().authorizeRequests()
+                .and()
+            .authorizeRequests()
                 // 排除该页面不做授权
                 .antMatchers("/authentication/require",
                         securityProperties.getBrowser().getLoginPage(),
@@ -94,7 +108,9 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter  {
                 .anyRequest()
                 .authenticated()
                 .and()
-                .csrf().disable();
+            .csrf().disable()
+                // 导入配置
+            .apply(smsCodeAuthenticationSecurityConfig);
 
     }
 }

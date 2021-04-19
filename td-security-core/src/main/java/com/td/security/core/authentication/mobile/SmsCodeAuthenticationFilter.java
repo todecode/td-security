@@ -62,13 +62,7 @@ public class SmsCodeAuthenticationFilter extends AbstractAuthenticationProcessin
     }
 
     /**
-     * Enables subclasses to override the composition of the username, such as by
-     * including additional values and a separator.
-     *
-     * @param request so that request attributes can be retrieve d
-     *
-     * @return the username that will be presented in the <code>Authentication</code>
-     * request token to the <code>AuthenticationManager</code>
+     * 获取手机号
      */
     protected String obtainMobile(HttpServletRequest request) {
         return request.getParameter(mobileParameter);
@@ -94,6 +88,10 @@ public class SmsCodeAuthenticationFilter extends AbstractAuthenticationProcessin
 
     public void setPostOnly(boolean postOnly) {
         this.postOnly = postOnly;
+    }
+
+    public final String getMobileParameter(){
+        return mobileParameter;
     }
 }
 
