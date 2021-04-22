@@ -9,7 +9,6 @@ import org.springframework.web.context.request.ServletWebRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Map;
 
 /**
  * @className: ValidateCodeController
@@ -21,7 +20,7 @@ import java.util.Map;
 public class ValidateCodeController {
 
     @Autowired
-    private Map<String,ValidateCodeProcessor> validatecodegenerators;
+    private ValidateCodeProcessorHolder validateCodeProcessorHolder;
 
     /**
      * 创建验证码，根据验证码类型不同，调用不同的{@link ValidateCodeProcessor}接口实现
@@ -32,9 +31,6 @@ public class ValidateCodeController {
      */
     @GetMapping("/code/{type}")
     public void createCode(HttpServletRequest request, HttpServletResponse response, @PathVariable String type) throws Exception {
-//        String code = type+"CodeProcessor";
-//        ValidateCodeProcessor s = validatecodegenerators.get(code);
-//        s.create(new ServletWebRequest(request,response));
-        validatecodegenerators.get(type+"CodeProcessor").create(new ServletWebRequest(request,response));
+        validateCodeProcessorHolder.findValidateCodeProcessor(type).create(new ServletWebRequest(request, response));
     }
 }

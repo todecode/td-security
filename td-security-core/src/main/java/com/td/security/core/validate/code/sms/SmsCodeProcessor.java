@@ -1,5 +1,6 @@
 package com.td.security.core.validate.code.sms;
 
+import com.td.security.core.properties.SecurityConstants;
 import com.td.security.core.validate.code.ValidateCode;
 import com.td.security.core.validate.code.impl.AbstractValidateCodeProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import org.springframework.web.context.request.ServletWebRequest;
  * @author: cyd
  * @date: 2021/4/16 上午11:38
  **/
-@Component("smsCodeProcessor")
+@Component("smsValidateCodeProcessor")
 public class SmsCodeProcessor  extends AbstractValidateCodeProcessor<ValidateCode> {
 
     private SessionStrategy sessionStrategy = new HttpSessionSessionStrategy();
@@ -28,7 +29,7 @@ public class SmsCodeProcessor  extends AbstractValidateCodeProcessor<ValidateCod
 
     @Override
     protected void send(ServletWebRequest request, ValidateCode validateCode) throws Exception {
-        String mobile = ServletRequestUtils.getRequiredStringParameter(request.getRequest(),"mobile");
+        String mobile = ServletRequestUtils.getRequiredStringParameter(request.getRequest(), SecurityConstants.DEFAULT_PARAMETER_NAME_MOBILE);
         smsCodeSender.send(mobile,validateCode.getCode());
     }
 }

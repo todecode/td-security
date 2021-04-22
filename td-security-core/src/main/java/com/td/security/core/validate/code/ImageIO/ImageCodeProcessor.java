@@ -12,7 +12,7 @@ import javax.imageio.ImageIO;
  * @author: cyd
  * @date: 2021/4/16 下午2:41
  **/
-@Component("imageCodeProcessor")
+@Component("imageValidateCodeProcessor")
 public class ImageCodeProcessor extends AbstractValidateCodeProcessor<ImageCode> {
     /**
      * 发送图形验证码，将其写在响应中
